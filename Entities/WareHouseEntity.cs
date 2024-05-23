@@ -7,17 +7,17 @@ using System.Threading.Tasks;
 
 namespace Entities
 {
-    public class WhereHouseEntity
+    public class WareHouseEntity
     {
         [Key]
         [StringLength(50)]
-        public required string WhereHouseId {  get; set; }
+        public required string WareHouseId {  get; set; }
 
         [Required,StringLength(100)]
-        public required string WhereHouseName { get; set; }
+        public required string WareHouseName { get; set; }
 
         [Required,StringLength(100)]
-        public required string WhereHouseAddress { get; set; }
+        public required string WareHouseAddress { get; set; }
 
         //relacion entre tablas
         //almacenamiento

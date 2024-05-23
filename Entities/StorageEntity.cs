@@ -23,8 +23,8 @@ namespace Entities
         public string ProductId { get; set; }
         public ProductEntity Product { get; set; }
         //bodehas
-        public string WhereHouseId { get; set; }
-        public WhereHouseEntity WhereHouse { get; set; }
+        public string WareHouseId { get; set; }
+        public WareHouseEntity WareHouse { get; set; }
         //movimientos
         public ICollection<InputOutputEntity> InputOutput { get; set; }
     }
