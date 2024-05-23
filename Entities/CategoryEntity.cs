@@ -16,5 +16,8 @@ namespace Entities
         [StringLength(100)]
         public required string CategoryName { get; set; }
 
+        //relacion entre tablas
+        //productos
+        public ICollection<ProductEntity> Products { get; set; }
     }
 }

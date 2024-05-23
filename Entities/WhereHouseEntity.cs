@@ -18,5 +18,9 @@ namespace Entities
 
         [Required,StringLength(100)]
         public required string WhereHouseAddress { get; set; }
+
+        //relacion entre tablas
+        //almacenamiento
+        public ICollection<StorageEntity> Storages { get; set; }
     }
 }

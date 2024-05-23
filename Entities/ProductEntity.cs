@@ -20,5 +20,12 @@ namespace Entities
         public string ProductDescription { get; set; }= string.Empty;
 
         public int TotalQuantity { get; set; }
+
+        //relacion entre tablas
+        //categorias
+        public string CategoryId { get; set; }
+        public CategoryEntity Category { get; set; }
+        //almacenamientos
+        public ICollection<StorageEntity> Storages { get; set; }
     }
 }
