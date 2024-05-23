@@ -1,0 +1,34 @@
+﻿@rendermode InteractiveServer
+
+<PageTitle>Home</PageTitle>
+
+<input type="text" @bind="@nombre" />
+<input type="text" @bind="@descripcion" />
+<input type="button" value="Haga click aqui" @onclick="ChangeText" />
+
+<div>
+    @message
+</div>
+
+@code {
+    [Parameter]
+    public string Message{ get; set; }
+
+
+    private string nombre;
+    private string descripcion;
+    private string message;
+
+    protected override async Task OnInitializedAsync()
+    {
+        message = Message;
+    }
+
+    private void ChangeText()
+    {
+        message = $"El autor {nombre} dice que: {descripcion}";
+    }
+}
+@code {
+
+}
