@@ -11,10 +11,10 @@ namespace Entities
     {
         [Key]
         [StringLength(50)]
-        public required string CategoryId { get; set; }
+        public string CategoryId { get; set; }
         [Required]
         [StringLength(100)]
-        public required string CategoryName { get; set; }
+        public string CategoryName { get; set; }
 
         //relacion entre tablas
         //productos

@@ -10,7 +10,7 @@ namespace Entities
     public class StorageEntity
     {
         [Key,StringLength(50)]
-        public required string StorageId {  get; set; }
+        public string StorageId {  get; set; }
 
         [Required]
         public DateTime LastUpdate { get; set; }

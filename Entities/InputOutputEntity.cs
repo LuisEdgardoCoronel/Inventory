@@ -10,7 +10,7 @@ namespace Entities
     public class InputOutputEntity
     {
         [Key, StringLength(50)]
-        public required string InOutId { get; set; }
+        public string InOutId { get; set; }
 
         [Required]
         public DateTime InOutDate { get; set; }

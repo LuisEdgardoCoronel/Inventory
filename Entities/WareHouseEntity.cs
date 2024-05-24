@@ -11,13 +11,13 @@ namespace Entities
     {
         [Key]
         [StringLength(50)]
-        public required string WareHouseId {  get; set; }
+        public string WareHouseId {  get; set; }
 
         [Required,StringLength(100)]
-        public required string WareHouseName { get; set; }
+        public string WareHouseName { get; set; }
 
         [Required,StringLength(100)]
-        public required string WareHouseAddress { get; set; }
+        public string WareHouseAddress { get; set; }
 
         //relacion entre tablas
         //almacenamiento

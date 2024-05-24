@@ -11,10 +11,10 @@ namespace Entities
     {
         [Key]
         [StringLength(10)]
-        public required string ProductId { get; set; }
+        public string ProductId { get; set; }
 
         [Required, StringLength(100)]
-        public required string ProductName { get; set; }
+        public string ProductName { get; set; }
 
         [StringLength(600)]
         public string ProductDescription { get; set; }= string.Empty;
