@@ -36,6 +36,28 @@ namespace DataAccess.Migrations
                     b.HasKey("CategoryId");
 
                     b.ToTable("TCategories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryId = "ASH",
+                            CategoryName = "Aseo Hogar"
+                        },
+                        new
+                        {
+                            CategoryId = "ASP",
+                            CategoryName = "Aseo Personal"
+                        },
+                        new
+                        {
+                            CategoryId = "HGR",
+                            CategoryName = "Hogar"
+                        },
+                        new
+                        {
+                            CategoryId = "PRF",
+                            CategoryName = "Perfumeria"
+                        });
                 });
 
             modelBuilder.Entity("Entities.InputOutputEntity", b =>
@@ -146,6 +168,26 @@ namespace DataAccess.Migrations
                     b.HasKey("WareHouseId");
 
                     b.ToTable("TWareHouse");
+
+                    b.HasData(
+                        new
+                        {
+                            WareHouseId = "fb7efbe8-0586-494f-abbb-3e0f0b6ffafc",
+                            WareHouseAddress = "Sarmiento 345",
+                            WareHouseName = "Bodega Central"
+                        },
+                        new
+                        {
+                            WareHouseId = "b542b6d1-ceef-4bc1-a0dd-f1f4fdf50cfb",
+                            WareHouseAddress = "Av. Libertador 1345",
+                            WareHouseName = "Bodega Norte"
+                        },
+                        new
+                        {
+                            WareHouseId = "f416e48e-1354-416a-a74b-51ab92172c79",
+                            WareHouseAddress = "24 de Septiembre y Ayacucho",
+                            WareHouseName = "Bodega Sur"
+                        });
                 });
 
             modelBuilder.Entity("Entities.InputOutputEntity", b =>
