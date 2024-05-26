@@ -19,6 +19,13 @@ namespace Business
             }
         }
 
+        public static async Task<ProductEntity> ProductById(string id)
+        {
+            using (var db = new InventaryContext())
+            {
+                return await db.TProducts.LastOrDefaultAsync(p => p.ProductId == id);
+            }
+        }
 
 
         public static async Task CreateProduct(ProductEntity oProduct)
