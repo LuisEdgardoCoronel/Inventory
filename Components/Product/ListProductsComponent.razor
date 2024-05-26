@@ -1,8 +1,9 @@
 ﻿@using Entities
 @using Business
+@rendermode InteractiveServer
 
 <hr/>
-<select class="form-control" @onchange="CategoryChanged">
+<select class="form-control" onchange="@CategoryChanged">
     <option value="">Seleccione categoria...</option>
     @foreach(var category in categories)
     {
@@ -15,9 +16,11 @@
 
 <table class="table table-hover table-bordered">
     <thead>
-        <tr>Referencia</tr>
-        <tr>Nombre de producto</tr>
-        <tr>Categoria</tr>
+        <tr>
+            <th>Referencia</th>
+            <th>Nombre de producto</th>
+            <th>Categoria</th>
+        </tr>
     </thead>
     <tbody>
         @foreach (var product in temporalProducts)
@@ -40,13 +43,14 @@
 
     protected override async Task OnInitializedAsync()
     {
-        products = B_Product.ProductList();
+        products = await B_Product.ProductList();
         temporalProducts = products;
-        categories = B_Category.CategoryList();
+        categories = await B_Category.CategoryList();
     }
 
     private void CategoryChanged(ChangeEventArgs eventArgs)
     {
-        temporalProducts = products.Where(c => c.CategoryId == eventArgs.Value.ToString()).ToList();
+        if (eventArgs.Value?.ToString() == "") temporalProducts = products;
+        else temporalProducts = products.Where(c => c.CategoryId == eventArgs.Value?.ToString()).ToList();
     }
 }
