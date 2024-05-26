@@ -1,45 +1,50 @@
 ﻿@using Entities
 @using Business
+@inject NavigationManager NavManager;
+@rendermode InteractiveServer
 
 <div>
-    <EditForm Model="oProduct">
+    <EditForm Model="@oProduct" OnValidSubmit="@SaveProduct">
         <div class="form-group">
-            <label>Referencia:</label>
-            <InputText @bind-Value="oProduct.ProductId" class="form-control"/>
+            <label for="ProductId">Referencia:</label>
+            <InputText id="ProductId" @bind-Value="oProduct.ProductId" class="form-control" required />
         </div>
         <div class="form-group">
-            <label>Nombre del producto:</label>
-            <InputText @bind-Value="oProduct.ProductName" class="form-control" />
+            <label for="ProductName">Nombre del producto:</label>
+            <InputText id="ProductName" @bind-Value="oProduct.ProductName" class="form-control" required />
         </div>
         <div class="form-group">
-            <label>Descripcion:</label>
-            <InputTextArea @bind-Value="oProduct.ProductDescription" class="form-control" />
+            <label for="ProductDescription">Descripcion:</label>
+            <InputTextArea id="ProductDescription" @bind-Value="oProduct.ProductDescription" class="form-control" required />
         </div>
         <div class="form-group">
-            <label>Categoria:</label>
-            <InputSelect @bind-Value="oProduct.CategoryId" class="form-control">
-                @foreach(var category in categories)
+            <label for="CategoryId">Categoria:</label>
+            <InputSelect id="CategoryId" @bind-Value="oProduct.CategoryId" class="form-control" required>
+                <option>Select category...</option>
+                @foreach (var category in categories)
                 {
                     <option value="@category.CategoryId">@category.CategoryName</option>
                 }
             </InputSelect>
         </div>
 
-        <input type="button" value="Guardar Producto" @onclick="SaveProduct" />
+        <button type="submit" class="btn btn-primary mt-2">Guardar Producto</button>
     </EditForm>
 </div>
 
 @code {
-    ProductEntity oProduct = new ProductEntity();
-    List<CategoryEntity> categories = new();
+    private ProductEntity oProduct = new();
+    private List<CategoryEntity> categories = new();
 
     protected override async Task OnInitializedAsync()
     {
-        categories =  B_Category.CategoryList();
+        categories = await B_Category.CategoryList();
     }
 
-    private void SaveProduct()
+    private async Task SaveProduct()
     {
-        B_Product.CreateProduct(oProduct);
+        await B_Product.CreateProduct(oProduct);
+        NavManager.NavigateTo("product/list");
     }
+
 }
