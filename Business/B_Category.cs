@@ -5,35 +5,36 @@ using System.Text;
 using System.Threading.Tasks;
 using DataAccess;
 using Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business
 {
     public class B_Category
     {
-        public static List<CategoryEntity> CategoryList()
+        public static async Task<List<CategoryEntity>> CategoryList()
         {
             using (var db = new InventaryContext())
             {
-                return db.TCategories.ToList();
+                return await db.TCategories.ToListAsync();
             }
         }
 
 
-        public void CreateCategory(CategoryEntity oCategory)
+        public async Task CreateCategory(CategoryEntity oCategory)
         {
-            using (var db = new InventaryContext())
+            await using (var db = new InventaryContext())
             {
                 db.TCategories.Add(oCategory);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
 
-        public void UpdateCategory(CategoryEntity oCategory)
+        public async Task UpdateCategory(CategoryEntity oCategory)
         {
-            using(var db = new InventaryContext())
+            await using(var db = new InventaryContext())
             {
-                db.TCategories.Update(oCategory); 
-                db.SaveChanges();
+                db.TCategories.Update(oCategory);
+                await db.SaveChangesAsync();
             }
         }
     }

@@ -5,37 +5,38 @@ using System.Text;
 using System.Threading.Tasks;
 using Entities;
 using DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business
 {
     public class B_Product
     {
-        public static List<ProductEntity> ProductList()
+        public static async Task<List<ProductEntity>> ProductList()
         {
             using (var db = new InventaryContext())
             {
-                return db.TProducts.ToList();
+                return await db.TProducts.ToListAsync();
             }
         }
 
 
 
-        public static void CreateProduct(ProductEntity oProduct)
+        public static async Task CreateProduct(ProductEntity oProduct)
         {
-            using (var db = new InventaryContext())
+            await using (var db = new InventaryContext())
             {
                 db.TProducts.Add(oProduct);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
 
 
-        public static void UpdateProduct(ProductEntity oProduct)
+        public static async Task UpdateProduct(ProductEntity oProduct)
         {
-            using (var db = new InventaryContext())
+            await using (var db = new InventaryContext())
             {
                 db.TProducts.Update(oProduct);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
     }
