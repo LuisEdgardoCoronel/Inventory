@@ -1,5 +1,40 @@
-﻿<h3>UpdateCategoryComponent</h3>
+﻿@using Entities;
+@using Business;
+@inject NavigationManager NavManager;
+@rendermode InteractiveServer
+
+
+<div class="container">
+    <EditForm Model="oCategory" OnValidSubmit="@SaveCategory">
+        <div class="form-group">
+            <label class="my-2" for="categoryId">Referencia:</label>
+            <InputText @bind-Value="oCategory.CategoryId" id="categoryId" class="form-control" />
+        </div>
+        <div>
+            <label class="my-2" for="categoryName">Nombre de la categoria:</label>
+            <InputText @bind-Value="oCategory.CategoryName" id="categoryName" class="form-control" />
+        </div>
+        <button type="submit" class="btn btn-success mt-2">Guardar Categoria</button>
+    </EditForm>
+</div>
+
 
 @code {
+    [Parameter]
+    public string categotyId { get; set; }
 
+    private CategoryEntity oCategory = new();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        oCategory = await B_Category.CategoryById(categotyId);
+    }
+
+
+    protected async Task SaveCategory()
+    {
+        await B_Category.UpdateCategory(oCategory);
+        NavManager.NavigateTo("/category/list");
+    }
 }
