@@ -21,9 +21,9 @@ namespace Business
 
         public static async Task<ProductEntity> ProductById(string id)
         {
-            using (var db = new InventaryContext())
+            await using (var db = new InventaryContext())
             {
-                return await db.TProducts.LastOrDefaultAsync(p => p.ProductId == id);
+                return await db.TProducts.Where(p => p.ProductId == id).FirstOrDefaultAsync();
             }
         }
 
