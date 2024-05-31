@@ -1,0 +1,41 @@
+﻿@using Business
+@using Entities
+@rendermode InteractiveServer
+@inject NavigationManager NavManager;
+
+<div>
+    <EditForm Model="oWareHouse">
+        <div>
+            <label for="warehouseId">Referencia</label>
+            <InputText id="warehouseId" class="form-control" @bind-Value="oWareHouse.WareHouseId" />
+        </div>
+        <div>
+            <label for="warehouseName">Nombre de la Bodega</label>
+            <InputText id="warehouseNombre" class="form-control" @bind-Value="oWareHouse.WareHouseName" />
+        </div>
+        <div>
+            <label for="warehouseAddress">Direccion de la Bodega</label>
+            <InputText id="warehouseAddress" class="form-control" @bind-Value="oWareHouse.WareHouseAddress" />
+        </div>
+        <button type="submit" class="btn btn-success mt-2">Guardar Bodega</button>
+    </EditForm>
+</div>
+
+@code {
+    [Parameter]
+    public string warehouseId { get; set; }
+
+    private WareHouseEntity oWareHouse = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        oWareHouse = await B_WareHouse.WareHousesById(warehouseId);
+    }
+
+
+    private async Task UpdateWareHouse()
+    {
+        await B_WareHouse.UpdateWareHouse(oWareHouse);
+        NavManager.NavigateTo("warehouse/list");
+    }
+}
