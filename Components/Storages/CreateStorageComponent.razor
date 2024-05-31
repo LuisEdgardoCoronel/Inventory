@@ -1,0 +1,72 @@
+﻿@using Entities
+@using Business
+@rendermode InteractiveServer
+@inject NavigationManager NavManager
+
+<div class="container">
+    <EditForm Model="storage" OnValidSubmit="@SaveStorage">
+        <div>
+            <label>Bogedas: </label>
+            <InputSelect @bind-Value="storage.WareHouseId" class="form-control">
+                <option value="">Selecione una bodega...</option>
+                @foreach(var wh in wareHouses)
+                {
+                    <option value="@wh.WareHouseId">@wh.WareHouseName</option>
+                }
+            </InputSelect>
+        </div>
+        <div>
+            <label>Productos:</label>
+            <InputSelect @bind-Value ="storage.ProductId" class="form-control">
+                <option value="">Selecione un producto...</option>
+                @foreach (var pr in products)
+                {
+                    <option value="@pr.ProductId">@pr.ProductName</option>
+                }
+            </InputSelect>
+        </div>
+
+        <button type="submit" class="mt-2 btn btn-success">Almacenar Producto</button>
+    </EditForm>
+    <div class=" text-center h4">
+        @message
+    </div>
+
+    <br />
+
+</div>
+
+
+
+@code {
+    private StorageEntity storage = new();
+
+    private List<WareHouseEntity> wareHouses = new();
+    private List<ProductEntity> products = new();
+
+
+    private string message;
+
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        wareHouses = await B_WareHouse.WareHousesList();
+        products = await B_Product.ProductList();
+    }
+
+
+    private async Task SaveStorage()
+    {
+        storage.StorageId = $"{storage.WareHouseId}-{storage.ProductId}";
+        
+        if (!await B_Storage.IsProductInWareHouse(storage.StorageId))
+        {
+            storage.LastUpdate = DateTime.Now;
+            await B_Storage.CreateStorages(storage);
+            message = "Producto registrado";
+        }
+        else message = "El producto ya existe en la bodega";
+        //NavManager.NavigateTo("");
+    }
+}
