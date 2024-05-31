@@ -19,8 +19,16 @@ namespace Business
             }
         }
 
+        public static async Task<CategoryEntity> CategoryById(string id)
+        {
+            using (var db = new InventaryContext())
+            {
+                return await db.TCategories.Where(c=>c.CategoryId==id).FirstOrDefaultAsync();
+            }
+        }
 
-        public async Task CreateCategory(CategoryEntity oCategory)
+
+        public static async Task CreateCategory(CategoryEntity oCategory)
         {
             await using (var db = new InventaryContext())
             {
@@ -29,7 +37,7 @@ namespace Business
             }
         }
 
-        public async Task UpdateCategory(CategoryEntity oCategory)
+        public static async Task UpdateCategory(CategoryEntity oCategory)
         {
             await using(var db = new InventaryContext())
             {

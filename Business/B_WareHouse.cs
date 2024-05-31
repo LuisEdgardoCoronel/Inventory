@@ -5,36 +5,46 @@ using System.Text;
 using System.Threading.Tasks;
 using Entities;
 using DataAccess;
+using Microsoft.EntityFrameworkCore;
 
 namespace Business
 {
     public class B_WareHouse
     {
-        public List<WareHouseEntity> WareHousesList()
+        public static async Task<List<WareHouseEntity>> WareHousesList()
         {
-            using(var db = new InventaryContext())
+            await using(var db = new InventaryContext())
             {
-                return db.TWareHouse.ToList();
+                return await db.TWareHouse.ToListAsync();
             }
         }
 
 
-        public void CreateWareHouse(WareHouseEntity oWareHouse)
+        public static async Task<WareHouseEntity> WareHousesById(string Id)
         {
-            using(var db = new InventaryContext())
+            await using (var db = new InventaryContext())
+            {
+                return await db.TWareHouse.Where(w=>w.WareHouseId==Id).FirstOrDefaultAsync();
+            }
+        }
+
+
+        public static async Task CreateWareHouse(WareHouseEntity oWareHouse)
+        {
+            await using(var db = new InventaryContext())
             {
                 db.TWareHouse.Add(oWareHouse);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
 
 
-        public void UpdateWareHouse(WareHouseEntity oWareHouse)
+        public static async Task UpdateWareHouse(WareHouseEntity oWareHouse)
         {
             using (var db = new InventaryContext())
             {
                 db.TWareHouse.Update(oWareHouse);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
     }

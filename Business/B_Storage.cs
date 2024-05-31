@@ -1,5 +1,6 @@
 ﻿using DataAccess;
 using Entities;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,31 +11,54 @@ namespace Business
 {
     public class B_Storage
     {
-        public List<StorageEntity> StorageList()
+        public static async Task<List<StorageEntity>> StorageList()
         {
-            using (var db = new InventaryContext())
+            await using (var db = new InventaryContext())
             {
-                return db.TStorages.ToList();
+                return await db.TStorages.ToListAsync();
+            }
+        }
+
+        public static async Task<Boolean> IsProductInWareHouse(string id)
+        {
+            await using (var db = new InventaryContext())
+            {
+                var productExists = await db.TStorages
+                    .AnyAsync(s => s.StorageId == id);
+
+                return productExists;
+            }
+        }
+
+        public static async Task<List<StorageEntity>> StorageProductsByWareHouse(string idWareHouse)
+        {
+            await using (var db = new InventaryContext())
+            {
+                return await db.TStorages
+                    .Include(s => s.Product)
+                    .Include(s => s.WareHouse)
+                    .Where(s => s.WareHouseId == idWareHouse)
+                    .ToListAsync();
             }
         }
 
 
-        public void CreateStorages(StorageEntity oStorage)
+        public static async Task CreateStorages(StorageEntity oStorage)
         {
-            using (var db = new InventaryContext())
+            await using (var db = new InventaryContext())
             {
                 db.TStorages.Add(oStorage);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
 
 
-        public void UpdateStorages(StorageEntity oStorage)
+        public static async Task UpdateStorages(StorageEntity oStorage)
         {
-            using (var db =  new InventaryContext())
+            await using (var db =  new InventaryContext())
             {
                 db.TStorages.Update(oStorage);
-                db.SaveChanges();
+                await db.SaveChangesAsync();
             }
         }
     }
